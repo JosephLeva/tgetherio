@@ -1,0 +1,65 @@
+
+:root {
+  --drop-height: 37vh;
+  --logo-size: 100px;
+  --offset: 250px;
+  --shadow-height: 8px;
+}
+
+
+
+.containerdiv {
+    margin:auto;
+  width: 25vw;
+  height: 30vh;
+  /* position: relative; */
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+
+
+}
+
+.logo {
+    margin:auto;
+    z-index: -1;
+  
+  /* position: absolute; */
+  top: 25vh;
+  /* left: calc(25vw ); */
+  animation-name: bounce; 
+  animation-duration: 0.5s;
+  animation-direction: alternate;
+  animation-timing-function: cubic-bezier(0.95, 0.05, 0.795, 0.035);
+  animation-iteration-count: infinite;
+}
+
+/* .shadow {
+  width: var(--logo-size);
+  height: var(--shadow-height);
+  background-color: #9E1ACE;
+  position: absolute;
+  top: calc(var(--offset) + var(--drop-height) + var(--logo-size) - var(--shadow-height) / 2 );
+  left: calc(50% - var(--logo-size)/2);
+} */
+.text{
+    margin: auto;
+    text-align: center;
+    margin-top: 25vh;
+    z-index: -1;
+    /* position: absolute; */
+    top: 85vh;
+    /* left:calc(25vw);
+    border: 1px solid #9E1ACE;
+    border-radius: 20px; */
+
+}
+
+@keyframes bounce {
+    from { 
+      transform: translateY(0) scale(2);
+    }
+    to   { 
+      transform: translateY(var(--drop-height)) scale(1, 0.7);
+    }
+  }
