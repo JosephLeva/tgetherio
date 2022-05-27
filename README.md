@@ -23,3 +23,10 @@ The data model below is a little out of date, but we were crunched for time and 
 # Flow Diagram
 Here's a quick look at how the contract/UI interfaces with our backend to provide a seamless collaborative payment interactions 
 ![There Should be a Flow Picture Here](https://github.com/JosephLeva/tgetherio/blob/main/Images/flow.png)
+
+# Substack
+
+Subscribe to our substack! We will be putting out content on app progress and writing fun informative articles meant for people of all levels of blockchain experience. 
+[tgether.substack.com](https://tgether.substack.com/)
+
+
