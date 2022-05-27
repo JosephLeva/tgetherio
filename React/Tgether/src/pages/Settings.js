@@ -73,7 +73,7 @@ const onSocketOpen = useCallback(() => {
 
     const transaction = async (user,account)=>{
       let options = {
-        contractAddress: "0xa89152832F675173244266864454b996430eDe48",
+        contractAddress: "0x2F6d82A39F3Fcbb5dBcD3fEB05f9e3e9a19cB5bc",
         functionName: "setPayout",
         abi: [
           {

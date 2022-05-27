@@ -90,20 +90,16 @@ contract Tgether is Ownable, ReentrancyGuard, Pausable, ChainlinkClient{
         }
 
 
-        // The only External Adapter modifier is used to ensure the payout function can only be done by our chainlink nodes
 
-        modifier onlyNode() {
-                require(msg.sender == adapterAddress); 
-        _;                              
-        }
-        event transactionSuccess(bool _paymentSucceded);
-        function fulfill(bytes32 requestId, bool _isSuccess) public onlyNode recordChainlinkFulfillment(requestId){
+        // i think this works, sometimes i get transactions in sometimes i dont
+        // if anyone has any suggestions to make it better please email me joseph.leva98@gmail.com
+        event transactionSuccess(bool _paymentSucceded) ;
+        function fulfill(bytes32 requestId, bool _isSuccess) public payable recordChainlinkFulfillment(requestId){
                 if (_isSuccess== true){
                 verifiedPayoutAddresses[PayoutToRecipient[requestId]].transfer(PayoutAmount[requestId]);
                 }
                 else{
                 verifiedPayoutAddresses[PayoutBackToUser[requestId]].transfer(PayoutAmount[requestId]);
-
                 }
         }
 

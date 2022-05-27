@@ -25,6 +25,8 @@ function Orders() {
     const [total, setTotal] = useState(0.0)
     const dispatch = useNotification();
     const contractProcessor = useWeb3ExecuteFunction();
+    
+    const [pricefeedval, setPriceFeedVal] = useState();
 
 
 
@@ -178,6 +180,8 @@ function Orders() {
           position: "topL",
         });
       };
+
+
     
       const handleError= (msg) => {
         dispatch({
@@ -187,12 +191,55 @@ function Orders() {
           position: "topL",
         });
       };
+    // working 0xa89152832F675173244266864454b996430eDe48
     
 
-    
-    const contractTransaction = async(user,recipient, orderIdVal)=>{
+    const callpricefeeds= async (user,recipient, orderId)=>{
       let options = {
-        contractAddress: "0xa89152832F675173244266864454b996430eDe48",
+        contractAddress: "0x2F6d82A39F3Fcbb5dBcD3fEB05f9e3e9a19cB5bc",
+        functionName: "getLatestPrice",
+        abi: [
+          {
+          "inputs": [],
+          "name": "getLatestPrice",
+          "outputs": [
+            {
+              "internalType": "int256",
+              "name": "",
+              "type": "int256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        }
+        ],
+        params: {
+        },
+      }
+      await contractProcessor.fetch({
+        params: options,
+        onSuccess: (e) => {
+          console.log((e.toNumber( )*10**(-8)))
+          setPriceFeedVal((userTotal/(e.toNumber( )*10**(-8))).toString())
+          console.log(pricefeedval)
+          contractTransaction(user,recipient, orderId, (userTotal/(e.toNumber( )*10**(-8))).toString())
+
+
+        },
+        onError: (error) => {
+          handleError(error.data.message)
+        }
+      });
+
+    }
+
+
+
+    
+    const contractTransaction = async(user,recipient, orderIdVal,price)=>{
+      console.log(pricefeedval, "here")
+      let options = {
+        contractAddress: "0x2F6d82A39F3Fcbb5dBcD3fEB05f9e3e9a19cB5bc",
         functionName: "PayIn",
         abi: [
           {
@@ -224,7 +271,7 @@ function Orders() {
           _recipientusername:recipient.recipient,
           _orderId: parseInt(orderIdVal)
         },
-        msgValue: Moralis.Units.ETH(userTotal),
+        msgValue: Moralis.Units.ETH(price.substring(0, 10)),
       }
       await contractProcessor.fetch({
         params: options,
@@ -517,7 +564,12 @@ function Orders() {
                 </Row>
                 <Row>
 
-                    <button type="button" className="btn btn-dark" style={{ maxWidth: "20vw", margin: "auto", marginTop: "3vh" }} onClick= {()=> {Transaction(user, recipient, orderId)}}>Make Payment</button>
+                    <button type="button" className="btn btn-dark" style={{ maxWidth: "20vw", margin: "auto", marginTop: "3vh" }} onClick= {async ()=> {
+                           await callpricefeeds(user,recipient, orderId)
+                            // Transaction(user, recipient, orderId)
+                          }
+                            }>Make Payment</button>
+
                     {/* <button type="button" className="btn btn-secondary" style={{ maxWidth: "20vw", margin: "auto", marginTop: "3vh" }} onClick={()=>{ethEnabled()}}>Agree</button> */}
 
                     
@@ -537,10 +589,10 @@ function Orders() {
 
                   <input type="text" className="form-control"  aria-label="Amount (to the nearest dollar)" style={{backgroundColor:"white", }} wtx-context="A5177AFF-6A2A-4352-A199-7D1A52EAE472" disabled={true} placeholder={userTotal} />
                   <button type="button" className="btn btn-dark btn-sm"style={{backgroundColor:"#9E1ACE", color:"white", fontSize:"1rem",}}><i className="fas fa-info-circle"></i></button>
-                  </div>
+                                    </div>
                 </div>
                 </div>
-
+                
         </div>
       </div>
       </div>
