@@ -8,7 +8,7 @@ We are currently only on the KOVAN test network, but have exciting plans to use 
 
 
 ## Dev Site
-[tgether.io](tgether.io)
+[tgether.io](https://tgether.io)
 
 
 Please note this app is in its infancy! We are just learning how to build fun things together *wink* and encourage as much criticism as you can throw at us! HIT ME UP (joseph.leva98@gmail.com)
